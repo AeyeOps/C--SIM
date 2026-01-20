@@ -1,3 +1,50 @@
+# C++SIM
+
+## Python Port Now Available
+
+**PySim** brings C++SIM's battle-tested discrete event simulation to Python 3.12+, preserving the API that has served researchers and engineers since 1990 while leveraging modern Python tooling.
+
+### What You Get
+
+- **SIMULA-style process-based simulation** - The same programming model, now with Python generators instead of OS threads
+- **Validated accuracy** - 77 tests verify numerical equivalence with C++SIM output
+- **Complete feature set**:
+  - Process scheduling (activate, hold, passivate, interrupt)
+  - Entity synchronization (Semaphore, TriggerQueue)
+  - Random streams (Uniform, Exponential, Normal, Erlang, HyperExponential, Triangular)
+  - Statistics collection (Mean, Variance, Histogram, Quantile)
+  - SimSet linked lists
+- **Type hints throughout** for IDE support and static analysis
+- **SimPy integration** - Built on a proven simulation engine
+
+### Quick Start
+
+```bash
+cd pysim && pip install -e .
+```
+
+```python
+from pysim import Process, Scheduler
+import simpy
+
+class Job(Process):
+    def body(self):
+        print(f"Job started at {self.current_time()}")
+        yield from self.hold(10.0)
+        print(f"Job finished at {self.current_time()}")
+
+env = simpy.Environment()
+Scheduler.scheduler(env)
+Job(env).activate()
+env.run()
+```
+
+See [pysim/README.md](pysim/README.md) for full documentation, API reference, and migration guide.
+
+---
+
+## C++SIM (Original)
+
 C++SIM is an object-oriented simulation package which has been under development and available since 1990. It provides discrete event process-based simulation similar to SIMULA's simulation class and libraries. A complete list of the facilities provided follows:
 
 - the core of the system gives SIMULA-like simulation routines, random number generators, queueing algorithms, and thread package interfaces.
